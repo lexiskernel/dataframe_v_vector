@@ -4,8 +4,9 @@ counties <- list_counties('georgia')
 
 county_names <- data.frame(counties$county)
 names(county_names) <- c("county_name")
+county_names$name_length <- c(1)
 
-multipliers <- c(1, 2, 4, 8, 16, 32, 64, 128, 512, 1024, 2048, 4096, 8192, 16384)
+multipliers <- c(1, 5, 25, 125, 625, 3125, 15625, 78125, 390625)#, 1953125)
 
 process_times_frames <- list()
 process_times_vectors <- list()
@@ -22,9 +23,10 @@ for (r in 1:length(multipliers)) {
   start <- Sys.time()
   for (i in 1:nrow(county_names_n)) { 
     
-    county <- county_names_n[i,]
-    print(county)
-    name_lengths[[i]] <- nchar(county)
+    county <- county_names_n$county_name[i]
+    #print(county)
+    #county_names_n[i,]$name_length <- nchar(county)
+    #name_lengths[[i]] <- nchar(county)
     
    }
   end <- Sys.time()
@@ -42,8 +44,9 @@ for (r in 1:length(multipliers)) {
   for (i in 1:length(county_names_n_vector[[1]])) { 
     
     county <- county_names_n_vector[[1]][i]
-    print(county)
-    name_lengths[[i]] <- nchar(county)
+    #print(county)
+    #county_names_n[i,]$name_length <- nchar(county)
+    #name_lengths[[i]] <- nchar(county)
     
    }
   end <- Sys.time()
@@ -51,6 +54,8 @@ for (r in 1:length(multipliers)) {
   vector_process_time <- difftime(end, start, units="secs")
   
   process_times_vectors[[r]] <- vector_process_time
+  
+  print(paste("processing of sets with", n, "rows completed!"), sep="")
   
   
   }
